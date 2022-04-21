@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="exercise1.Controller">
    <children>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: lightblue;">
@@ -22,6 +21,6 @@
             <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
          </padding>
       </ButtonBar>
-      <Pane fx:id="drawpane" onDragDetected="#onDragDetected" onDragDone="#onDragDone" prefHeight="538.0" prefWidth="649.0" />
+      <Pane fx:id="drawpane" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" prefHeight="538.0" prefWidth="649.0" style="-fx-background-color: white;" />
    </children>
 </VBox>
