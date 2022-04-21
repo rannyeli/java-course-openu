@@ -6,7 +6,7 @@
   "configurations": [
     {
       "type": "java",
-      "name": "exercise1",
+      "name": "maman11/exercise1",
       "request": "launch",
       "mainClass": "exercise1/exercise1.App",
       "projectName": "maman11",
@@ -14,10 +14,26 @@
     },
     {
       "type": "java",
-      "name": "exercise2",
+      "name": "maman11/exercise2",
       "request": "launch",
       "mainClass": "exercise2/exercise2.App",
       "projectName": "maman11",
+      "vmArgs": "--module-path \"C:/Program Files/AdoptOpenJDK/jdk-11.0.7.10-hotspot/lib\" --add-modules javafx.controls,javafx.fxml"
+    },
+    {
+      "type": "java",
+      "name": "maman13/exercise1",
+      "request": "launch",
+      "mainClass": "exercise1/exercise1.App",
+      "projectName": "maman13",
+      "vmArgs": "--module-path \"C:/Program Files/AdoptOpenJDK/jdk-11.0.7.10-hotspot/lib\" --add-modules javafx.controls,javafx.fxml"
+    },
+    {
+      "type": "java",
+      "name": "maman13/exercise2",
+      "request": "launch",
+      "mainClass": "exercise2/exercise2.App",
+      "projectName": "maman13",
       "vmArgs": "--module-path \"C:/Program Files/AdoptOpenJDK/jdk-11.0.7.10-hotspot/lib\" --add-modules javafx.controls,javafx.fxml"
     }
   ]
