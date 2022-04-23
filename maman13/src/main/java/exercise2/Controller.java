@@ -67,7 +67,50 @@ public class Controller {
         boardMat[col][row] = playerTurn;
         Circle disc = new Circle(45, playerTurn == 1 ? Color.RED : Color.BLUE);
         gameBoard.add(disc, col, ROWS - row - 1);
-        passTurn();
+
+        if (checkIfWin(playerTurn)) {
+            displayMessage("Winner!");
+        } else {
+            passTurn();
+        }
+    }
+
+    private boolean checkIfWin(int player) {
+        // horizontalCheck
+        for (int j = 0; j < ROWS - 3; j++) {
+            for (int i = 0; i < COLS; i++) {
+                if (boardMat[i][j] == player && boardMat[i][j + 1] == player && boardMat[i][j + 2] == player
+                        && boardMat[i][j + 3] == player) {
+                    return true;
+                }
+            }
+        }
+        // verticalCheck
+        for (int i = 0; i < COLS - 3; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                if (boardMat[i][j] == player && boardMat[i + 1][j] == player && boardMat[i + 2][j] == player
+                        && boardMat[i + 3][j] == player) {
+                    return true;
+                }
+            }
+        }
+        // ascendingDiagonalCheck
+        for (int i = 3; i < COLS; i++) {
+            for (int j = 0; j < ROWS - 3; j++) {
+                if (boardMat[i][j] == player && boardMat[i - 1][j + 1] == player && boardMat[i - 2][j + 2] == player
+                        && boardMat[i - 3][j + 3] == player)
+                    return true;
+            }
+        }
+        // descendingDiagonalCheck
+        for (int i = 3; i < COLS; i++) {
+            for (int j = 3; j < ROWS; j++) {
+                if (boardMat[i][j] == player && boardMat[i - 1][j - 1] == player && boardMat[i - 2][j - 2] == player
+                        && boardMat[i - 3][j - 3] == player)
+                    return true;
+            }
+        }
+        return false;
     }
 
     @FXML
@@ -111,6 +154,7 @@ public class Controller {
         gameBoard.getChildren().clear();
         gameBoard.setGridLinesVisible(false);
         gameBoard.setGridLinesVisible(true);
+        passTurn();
     }
 
 }
