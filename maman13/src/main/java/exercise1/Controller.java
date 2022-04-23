@@ -23,8 +23,8 @@ public class Controller {
     private Rectangle rectangle;
     private String type;
     private Color color;
-    private final Group group = new Group();
-    private final ToggleGroup tgroup = new ToggleGroup();
+    private final Group shapesGroup = new Group();
+    private final ToggleGroup toggleGroup = new ToggleGroup();
     private double x1, y1, x2, y2;
 
     @FXML
@@ -38,28 +38,46 @@ public class Controller {
     @FXML
     private RadioButton emptyRadioBtn;
 
+    /**
+     * initialize screen properties
+     */
     @FXML
     public void initialize() {
-        drawpane.getChildren().add(group);
-        comboBox.setItems(FXCollections.observableArrayList("Line", "Circle", "Rectangle"));
-        comboBox.getSelectionModel().selectFirst();
-        fillRadioBtn.setToggleGroup(tgroup);
-        emptyRadioBtn.setToggleGroup(tgroup);
-        fillRadioBtn.setSelected(true);
+        drawpane.getChildren().add(shapesGroup); // add shapes group to screen
+        comboBox.setItems(FXCollections.observableArrayList("Line", "Circle", "Rectangle")); // set optional shapes
+        comboBox.getSelectionModel().selectFirst(); // set first shape in list as default
+        fillRadioBtn.setToggleGroup(toggleGroup); // add radio button to toggle group
+        emptyRadioBtn.setToggleGroup(toggleGroup);
+        fillRadioBtn.setSelected(true); // set fill radio button selected as default
         type = comboBox.getValue();
         color = colorPicker.getValue();
     }
 
+    /**
+     * shape selector handler - save selected shape on change
+     * 
+     * @param event
+     */
     @FXML
     void handleShapeChange(ActionEvent event) {
         type = comboBox.getValue();
     }
 
+    /**
+     * color selector handler - save selected color on change
+     * 
+     * @param event
+     */
     @FXML
     void handleColorChange(ActionEvent event) {
         color = colorPicker.getValue();
     }
 
+    /**
+     * prepare shape color properties for drawing
+     * 
+     * @param shape
+     */
     private void initShape(Shape shape) {
         shape.setStrokeWidth(2);
         shape.setStroke(color);
@@ -69,13 +87,17 @@ public class Controller {
             shape.setFill(Color.TRANSPARENT);
     }
 
+    /**
+     * handle shape drawing, draw shape as requested and add to screen
+     */
     private void drawShape() {
         double x, y, w, h, rx, ry;
+        // create the requested shape and add to screen
         switch (type) {
             case "Line":
                 line = new Line(x1, y1, x2, y2);
                 initShape(line);
-                group.getChildren().add(line);
+                shapesGroup.getChildren().add(line);
                 break;
             case "Circle":
                 rx = Math.abs(x2 - x1) / 2;
@@ -84,7 +106,7 @@ public class Controller {
                 y = Math.min(y1, y2) + ry;
                 circle = new Ellipse(x, y, rx, ry);
                 initShape(circle);
-                group.getChildren().add(circle);
+                shapesGroup.getChildren().add(circle);
                 break;
             case "Rectangle":
                 w = Math.abs(x2 - x1);
@@ -93,17 +115,27 @@ public class Controller {
                 y = Math.min(y1, y2);
                 rectangle = new Rectangle(x, y, w, h);
                 initShape(rectangle);
-                group.getChildren().add(rectangle);
+                shapesGroup.getChildren().add(rectangle);
                 break;
         }
     }
 
+    /**
+     * save event's coordinates when mouse pressed
+     * 
+     * @param event
+     */
     @FXML
     void handleMousePressed(MouseEvent event) {
         x1 = event.getX();
         y1 = event.getY();
     }
 
+    /**
+     * save event's coordinates when mouse released, then start drawing
+     * 
+     * @param event
+     */
     @FXML
     void handleMouseReleased(MouseEvent event) {
         x2 = event.getX();
@@ -111,16 +143,26 @@ public class Controller {
         drawShape();
     }
 
+    /**
+     * handle undo button click - remove last shape from screen
+     * 
+     * @param event
+     */
     @FXML
     void handleUndoClick(ActionEvent event) {
-        int size = group.getChildren().size();
+        int size = shapesGroup.getChildren().size();
         if (size > 0) {
-            group.getChildren().remove(size - 1);
+            shapesGroup.getChildren().remove(size - 1);
         }
     }
 
+    /**
+     * handle clear button click - remove all shapes from screen
+     * 
+     * @param event
+     */
     @FXML
     void handleClearClick(ActionEvent event) {
-        group.getChildren().clear();
+        shapesGroup.getChildren().clear();
     }
 }
