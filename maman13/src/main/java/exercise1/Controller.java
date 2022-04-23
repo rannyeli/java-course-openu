@@ -25,6 +25,7 @@ public class Controller {
     private Color color;
     private final Group group = new Group();
     private final ToggleGroup tgroup = new ToggleGroup();
+    private double x1, y1, x2, y2;
 
     @FXML
     private Pane drawpane;
@@ -68,48 +69,41 @@ public class Controller {
             shape.setFill(Color.TRANSPARENT);
     }
 
-    @FXML
-    void handleMousePressed(MouseEvent event) {
+    private void drawShape() {
         switch (type) {
             case "Line":
-                line = new Line();
+                line = new Line(x1, y1, x2, y2);
                 initShape(line);
-                line.setStartX(event.getX());
-                line.setStartY(event.getY());
+                group.getChildren().add(line);
                 break;
             case "Circle":
-                circle = new Circle();
+                circle = new Circle(x1, y1, Math.abs(x2 - x1));
                 initShape(circle);
-                circle.setCenterX(event.getX());
-                circle.setCenterY(event.getY());
+                group.getChildren().add(circle);
                 break;
             case "Rectangle":
-                rectangle = new Rectangle();
+                double w = Math.abs(x2 - x1);
+                double h = Math.abs(y2 - y1);
+                double x = Math.abs(Math.max(x1, x2) - w);
+                double y = Math.min(y1, y2);
+                rectangle = new Rectangle(x, y, w, h);
                 initShape(rectangle);
-                rectangle.setX(event.getX());
-                rectangle.setY(event.getY());
+                group.getChildren().add(rectangle);
                 break;
         }
     }
 
     @FXML
+    void handleMousePressed(MouseEvent event) {
+        x1 = event.getX();
+        y1 = event.getY();
+    }
+
+    @FXML
     void handleMouseReleased(MouseEvent event) {
-        switch (type) {
-            case "Line":
-                line.setEndX(event.getX());
-                line.setEndY(event.getY());
-                group.getChildren().add(line);
-                break;
-            case "Circle":
-                circle.setRadius(Math.abs(event.getX() - circle.getCenterX()));
-                group.getChildren().add(circle);
-                break;
-            case "Rectangle":
-                rectangle.setWidth(Math.abs(event.getX() - rectangle.getX()));
-                rectangle.setHeight(Math.abs(event.getY() - rectangle.getY()));
-                group.getChildren().add(rectangle);
-                break;
-        }
+        x2 = event.getX();
+        y2 = event.getY();
+        drawShape();
     }
 
     @FXML
