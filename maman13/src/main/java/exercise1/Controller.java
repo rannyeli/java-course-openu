@@ -11,7 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -19,7 +19,7 @@ import javafx.scene.shape.Shape;
 public class Controller {
 
     private Line line;
-    private Circle circle;
+    private Ellipse circle;
     private Rectangle rectangle;
     private String type;
     private Color color;
@@ -70,6 +70,7 @@ public class Controller {
     }
 
     private void drawShape() {
+        double x, y, w, h, rx, ry;
         switch (type) {
             case "Line":
                 line = new Line(x1, y1, x2, y2);
@@ -77,15 +78,19 @@ public class Controller {
                 group.getChildren().add(line);
                 break;
             case "Circle":
-                circle = new Circle(x1, y1, Math.abs(x2 - x1));
+                rx = Math.abs(x2 - x1) / 2;
+                ry = Math.abs(y2 - y1) / 2;
+                x = Math.abs(Math.max(x1, x2) - Math.abs(x2 - x1)) + rx;
+                y = Math.min(y1, y2) + ry;
+                circle = new Ellipse(x, y, rx, ry);
                 initShape(circle);
                 group.getChildren().add(circle);
                 break;
             case "Rectangle":
-                double w = Math.abs(x2 - x1);
-                double h = Math.abs(y2 - y1);
-                double x = Math.abs(Math.max(x1, x2) - w);
-                double y = Math.min(y1, y2);
+                w = Math.abs(x2 - x1);
+                h = Math.abs(y2 - y1);
+                x = Math.abs(Math.max(x1, x2) - w);
+                y = Math.min(y1, y2);
                 rectangle = new Rectangle(x, y, w, h);
                 initShape(rectangle);
                 group.getChildren().add(rectangle);
