@@ -8,7 +8,7 @@ public class MainA {
     private static final int MAX_RANDOM = 100;
     private static final int NUM_OF_ELEMENTS = 10;
 
-    private static void fillSetWithRandomIntegers(Set<Integer> s) {
+    public static void fillSetWithRandomIntegers(Set<Integer> s) {
         int randomNum;
         for (int i = 0; i < NUM_OF_ELEMENTS; i++) {
             randomNum = ThreadLocalRandom.current().nextInt(MIN_RANDOM, MAX_RANDOM);
