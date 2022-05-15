@@ -8,6 +8,11 @@ public class MainA {
     private static final int MAX_RANDOM = 100;
     private static final int NUM_OF_ELEMENTS = 10;
 
+    /**
+     * function to fill a Set with random integers
+     * 
+     * @param s: Set to fill
+     */
     public static void fillSetWithRandomIntegers(Set<Integer> s) {
         int randomNum;
         for (int i = 0; i < NUM_OF_ELEMENTS; i++) {

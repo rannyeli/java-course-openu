@@ -4,6 +4,12 @@ import java.util.Iterator;
 
 public class MainB {
 
+    /**
+     * generic method that finds the smallest object in a Set of comparable objects
+     * 
+     * @param s: Set to search in
+     * @return the smallest object
+     */
     public static <T extends Comparable<T>> T getMinimumOfASet(Set<T> s) {
         Iterator<T> itr = s.iterator();
         T minimum = itr.next();
