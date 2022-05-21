@@ -1,5 +1,6 @@
 package exercise2;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
 public class Controller {
 
@@ -67,7 +69,7 @@ public class Controller {
             dict.delete(term);
             termField.clear();
             meaningField.clear();
-            renderDictionary("");
+            renderDictionary(searchField.getText());
         }
     }
 
@@ -79,13 +81,31 @@ public class Controller {
             dict.save(term, meaning);
             termField.clear();
             meaningField.clear();
-            renderDictionary("");
+            renderDictionary(searchField.getText());
         }
     }
 
     @FXML
     void handleSearch(KeyEvent event) {
         renderDictionary(searchField.getText());
+    }
+
+    @FXML
+    void handleExport(ActionEvent event) {
+        dict.exportDict(getFile());
+    }
+
+    @FXML
+    void handleImport(ActionEvent event) {
+        dict.importDict(getFile());
+        renderDictionary(searchField.getText());
+    }
+
+    private File getFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("select a file");
+        fileChooser.setInitialDirectory(new File("."));
+        return fileChooser.showOpenDialog(null);
     }
 
 }
