@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -35,25 +36,27 @@ public class Controller {
         dict = new Dictionary();
     }
 
-    private void renderDictionary() {
+    private void renderDictionary(String filterTerm) {
         termsList.getChildren().clear();
         Iterator<Entry<String, String>> i = dict.iterator();
 
         while (i.hasNext()) {
             Entry<String, String> entry = i.next();
-            Text text = new Text(entry.getKey() + ": " + entry.getValue());
-            text.setOnMouseClicked(e -> {
-                termField.setText(entry.getKey());
-                meaningField.setText(entry.getValue());
-            });
-            text.setCursor(Cursor.HAND);
-            text.setOnMouseEntered(e -> {
-                text.setUnderline(true);
-            });
-            text.setOnMouseExited(e -> {
-                text.setUnderline(false);
-            });
-            termsList.getChildren().add(text);
+            if (entry.getKey().contains(filterTerm)) {
+                Text text = new Text(entry.getKey() + ": " + entry.getValue());
+                text.setOnMouseClicked(e -> {
+                    termField.setText(entry.getKey());
+                    meaningField.setText(entry.getValue());
+                });
+                text.setCursor(Cursor.HAND);
+                text.setOnMouseEntered(e -> {
+                    text.setUnderline(true);
+                });
+                text.setOnMouseExited(e -> {
+                    text.setUnderline(false);
+                });
+                termsList.getChildren().add(text);
+            }
         }
     }
 
@@ -64,7 +67,7 @@ public class Controller {
             dict.delete(term);
             termField.clear();
             meaningField.clear();
-            renderDictionary();
+            renderDictionary("");
         }
     }
 
@@ -76,13 +79,13 @@ public class Controller {
             dict.save(term, meaning);
             termField.clear();
             meaningField.clear();
-            renderDictionary();
+            renderDictionary("");
         }
     }
 
     @FXML
-    void handleSearch(ActionEvent event) {
-
+    void handleSearch(KeyEvent event) {
+        renderDictionary(searchField.getText());
     }
 
 }
