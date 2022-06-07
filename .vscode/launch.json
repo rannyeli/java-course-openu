@@ -6,6 +6,18 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch App",
+      "request": "launch",
+      "mainClass": "exercise1.App"
+    },
+    {
+      "type": "java",
+      "name": "Launch App",
+      "request": "launch",
+      "mainClass": "App"
+    },
+    {
+      "type": "java",
       "name": "maman11/exercise1",
       "request": "launch",
       "mainClass": "exercise1/exercise1.App",
