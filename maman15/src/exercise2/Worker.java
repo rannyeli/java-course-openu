@@ -67,10 +67,11 @@ public class Worker extends Thread {
         super.run();
         while (_round <= _m) {
             process();
+            _round++;
 
             lock.lock();
             try {
-                while (_done % _m != 0) {
+                while (_done == 0 || _done % _m != 0) {
                     cond.await();
                 }
             } catch (InterruptedException e) {
@@ -81,9 +82,8 @@ public class Worker extends Thread {
 
             lock.lock();
             try {
-                if (_done % _m == 0) {
+                if (_done != 0 && _done % _m == 0) {
                     System.out.println(Arrays.toString(_workers));
-                    _round++;
                     cond.signalAll();
                 }
             } finally {
