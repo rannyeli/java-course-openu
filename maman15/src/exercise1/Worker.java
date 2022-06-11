@@ -16,7 +16,7 @@ public class Worker extends Thread {
     }
 
     /**
-     * Worker thread run method to sum any two numbers in the moniotrs list
+     * Worker thread run method to sum any two numbers in the monitors list
      */
     @Override
     public void run() {
